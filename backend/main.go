@@ -24,6 +24,7 @@ func main() {
 	seedAdmin()
 
 	r := gin.Default()
+	r.Use(middleware.CORS())
 	routes.Setup(r)
 
 	log.Println("Server starting on :8080")

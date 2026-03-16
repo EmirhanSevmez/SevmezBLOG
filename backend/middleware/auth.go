@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"log"
 	"net/http"
 	"os"
 	"strings"
@@ -33,7 +34,7 @@ type Claims struct {
 func getSecret() []byte {
 	s := os.Getenv("JWT_SECRET")
 	if s == "" {
-		s = "default-secret-change-me" //change later
+		log.Fatal("JWT_SECRET ortam değişkeni tanımlanmamış!")
 	}
 	return []byte(s)
 }

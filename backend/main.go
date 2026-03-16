@@ -12,6 +12,8 @@ import (
 )
 
 func main() {
+	gin.SetMode(config.GetEnv("GIN_MODE", gin.ReleaseMode))
+
 	config.ConnectDB()
 
 	config.DB.AutoMigrate(
@@ -27,8 +29,9 @@ func main() {
 	r.Use(middleware.CORS())
 	routes.Setup(r)
 
-	log.Println("Server starting on :8080")
-	r.Run(":8080")
+	port := config.GetEnv("PORT", "8080")
+	log.Printf("Server starting on :%s\n", port)
+	r.Run(":" + port)
 }
 
 func seedAdmin() {

@@ -14,7 +14,7 @@ export default function Navbar() {
                         Blog
                     </Link>
                     {user?.role === "approved" || user?.role === "moderator" || user?.role === "admin" ? (
-                        <Link href="/posts/new" className="text-sm text-muted-foreground hover:text-foreground">
+                        <Link href="/new" className="text-sm text-muted-foreground hover:text-foreground">
                             Yeni Post
                         </Link>
                     ) : null}

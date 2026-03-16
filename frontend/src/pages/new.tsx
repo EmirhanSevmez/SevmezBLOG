@@ -28,8 +28,10 @@ export default function NewPost() {
         try {
             const res = await api.post("/posts", { title, content });
             router.push(`/posts/${res.data.id}`);
-        } catch {
-            setError("Post oluşturulamadı");
+        } catch (err: any) {
+            console.error("Post error:", err);
+            const msg = err?.response?.data?.error || err?.message || "Post oluşturulamadı";
+            setError(msg);
         }
     };
 

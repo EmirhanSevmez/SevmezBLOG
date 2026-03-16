@@ -63,6 +63,22 @@ globalThis.__BUILD_MANIFEST = {
       "static/chunks/src_pages_login_2da965e7._.js",
       "static/chunks/turbopack-src_pages_login_800512cf._.js"
     ],
+    "/new": [
+      "static/chunks/node_modules_next_dist_compiled_caaa605a._.js",
+      "static/chunks/node_modules_next_dist_shared_lib_15080aa3._.js",
+      "static/chunks/node_modules_next_dist_client_881bc7f7._.js",
+      "static/chunks/node_modules_next_dist_75b597d7._.js",
+      "static/chunks/node_modules_next_5cb05f67._.js",
+      "static/chunks/node_modules_react_e3593a73._.js",
+      "static/chunks/node_modules_react-dom_cjs_react-dom_development_2b5e0eb3.js",
+      "static/chunks/node_modules_react-dom_8a8085df._.js",
+      "static/chunks/node_modules_axios_lib_2c8bf6cb._.js",
+      "static/chunks/node_modules_tailwind-merge_dist_bundle-mjs_mjs_0ab97e45._.js",
+      "static/chunks/node_modules_a3f0a94f._.js",
+      "static/chunks/[root-of-the-server]__5b5253c7._.js",
+      "static/chunks/src_pages_new_2da965e7._.js",
+      "static/chunks/turbopack-src_pages_new_9fadccdc._.js"
+    ],
     "/posts/[id]": [
       "static/chunks/node_modules_next_dist_compiled_caaa605a._.js",
       "static/chunks/node_modules_next_dist_shared_lib_15080aa3._.js",
@@ -78,22 +94,6 @@ globalThis.__BUILD_MANIFEST = {
       "static/chunks/[root-of-the-server]__050deeb1._.js",
       "static/chunks/src_pages_posts_[id]_tsx_2da965e7._.js",
       "static/chunks/turbopack-src_pages_posts_[id]_tsx_c5a34e66._.js"
-    ],
-    "/register": [
-      "static/chunks/node_modules_next_dist_compiled_caaa605a._.js",
-      "static/chunks/node_modules_next_dist_shared_lib_15080aa3._.js",
-      "static/chunks/node_modules_next_dist_client_881bc7f7._.js",
-      "static/chunks/node_modules_next_dist_75b597d7._.js",
-      "static/chunks/node_modules_next_5cb05f67._.js",
-      "static/chunks/node_modules_react_e3593a73._.js",
-      "static/chunks/node_modules_react-dom_cjs_react-dom_development_2b5e0eb3.js",
-      "static/chunks/node_modules_react-dom_8a8085df._.js",
-      "static/chunks/node_modules_axios_lib_2c8bf6cb._.js",
-      "static/chunks/node_modules_tailwind-merge_dist_bundle-mjs_mjs_0ab97e45._.js",
-      "static/chunks/node_modules_a3f0a94f._.js",
-      "static/chunks/[root-of-the-server]__6c90bfa6._.js",
-      "static/chunks/src_pages_register_2da965e7._.js",
-      "static/chunks/turbopack-src_pages_register_7092a678._.js"
     ]
   },
   "devFiles": [],

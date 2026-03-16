@@ -8,11 +8,11 @@ self.__BUILD_MANIFEST = {
   "/login": [
     "static/chunks/pages/login.js"
   ],
+  "/new": [
+    "static/chunks/pages/new.js"
+  ],
   "/posts/[id]": [
     "static/chunks/pages/posts/[id].js"
-  ],
-  "/register": [
-    "static/chunks/pages/register.js"
   ],
   "__rewrites": {
     "afterFiles": [],

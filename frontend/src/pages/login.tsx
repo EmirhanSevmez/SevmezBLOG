@@ -28,25 +28,33 @@ export default function Login() {
 
     return (
         <Layout>
-            <div className="max-w-md mx-auto">
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Giriş Yap</CardTitle>
+            <div className="max-w-md mx-auto mt-8">
+                <Card className="animate-fade-in shadow-lg">
+                    <CardHeader className="text-center">
+                        <CardTitle className="text-2xl">Giriş Yap</CardTitle>
+                        <p className="text-sm text-muted-foreground mt-1">Hesabınıza giriş yapın</p>
                     </CardHeader>
                     <CardContent>
                         <form onSubmit={handleSubmit} className="space-y-4">
-                            {error && <p className="text-sm text-destructive">{error}</p>}
+                            {error && (
+                                <div className="bg-destructive/10 text-destructive text-sm p-3 rounded-md animate-fade-in-down">
+                                    {error}
+                                </div>
+                            )}
                             <div className="space-y-2">
                                 <Label htmlFor="email">Email</Label>
-                                <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                                <Input id="email" type="email" placeholder="ornek@email.com" value={email} onChange={(e) => setEmail(e.target.value)} required className="transition-all duration-200 focus:shadow-md" />
                             </div>
                             <div className="space-y-2">
                                 <Label htmlFor="password">Şifre</Label>
-                                <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                                <Input id="password" type="password" placeholder="••••••" value={password} onChange={(e) => setPassword(e.target.value)} required className="transition-all duration-200 focus:shadow-md" />
                             </div>
-                            <Button type="submit" className="w-full">Giriş</Button>
+                            <Button type="submit" className="w-full transition-all duration-200 hover:shadow-md">Giriş</Button>
                             <p className="text-sm text-center text-muted-foreground">
-                                Hesabın yok mu? <Link href="/register" className="underline">Kayıt ol</Link>
+                                Hesabın yok mu?{" "}
+                                <Link href="/register" className="text-primary underline-offset-4 hover:underline transition-all duration-200">
+                                    Kayıt ol
+                                </Link>
                             </p>
                         </form>
                     </CardContent>

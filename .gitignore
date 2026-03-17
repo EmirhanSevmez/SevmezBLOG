@@ -1,5 +1,20 @@
-frontend/.next/dev/cache
+node_modules/
+frontend/.next/
+frontend/out/
 
-# Environment files
-.env
+*.env
+.env.*
 backend/.env
+
+backend/tmp/
+
+*.exe
+*.dll
+*.so
+*.dylib
+
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~

@@ -1,4 +1,4 @@
-# SevmezBLOG (v0.1)
+# SevmezBLOG (v0.2)
 
 Full-stack blog platformu. Go (Gin) backend, Next.js (React) frontend, PostgreSQL veritabanı. JWT tabanlı kimlik doğrulama ve 5 kademeli rol sistemi ile güçlendirilmiş, Docker ile tek komutla ayağa kalkar.
 

@@ -80,7 +80,13 @@ export default function PostDetail() {
     };
 
     if (loading) {
-        return <Layout><p className="text-muted-foreground">Yükleniyor...</p></Layout>;
+        return (
+            <Layout>
+                <div className="flex items-center justify-center py-20">
+                    <div className="h-8 w-8 rounded-full border-2 border-primary border-t-transparent animate-spin" />
+                </div>
+            </Layout>
+        );
     }
 
     if (!post) {
@@ -104,31 +110,37 @@ export default function PostDetail() {
     return (
         <Layout>
             <article className="mb-10">
-                <div className="flex items-start justify-between mb-4">
+                <div className="flex items-start justify-between mb-6 animate-fade-in">
                     <div>
-                        <h1 className="text-3xl font-bold">{post.title}</h1>
-                        <div className="flex items-center gap-2 mt-2">
+                        <h1 className="text-3xl font-bold tracking-tight">{post.title}</h1>
+                        <div className="flex items-center gap-3 mt-3">
                             <Badge variant="outline">{post.author.username}</Badge>
                             <span className="text-sm text-muted-foreground">
-                                {new Date(post.created_at).toLocaleDateString("tr-TR")}
+                                {new Date(post.created_at).toLocaleDateString("tr-TR", {
+                                    year: "numeric",
+                                    month: "long",
+                                    day: "numeric",
+                                })}
                             </span>
                         </div>
+                        <div className="h-1 w-12 bg-primary rounded-full mt-4" />
                     </div>
                     {canDelete && (
-                        <Button variant="destructive" size="sm" onClick={deletePost}>
+                        <Button variant="destructive" size="sm" onClick={deletePost} className="transition-all duration-200">
                             Sil
                         </Button>
                     )}
                 </div>
-                <div className="prose max-w-none whitespace-pre-wrap">
+                <div className="prose max-w-none whitespace-pre-wrap text-foreground/90 leading-relaxed animate-fade-in stagger-1">
                     {post.content}
                 </div>
             </article>
 
-            <section>
-                <h2 className="text-xl font-bold mb-4">
-                    Yorumlar ({post.comments?.length || 0})
-                </h2>
+            <section className="animate-fade-in stagger-2">
+                <div className="flex items-center gap-3 mb-4">
+                    <h2 className="text-xl font-bold">Yorumlar</h2>
+                    <Badge variant="secondary">{post.comments?.length || 0}</Badge>
+                </div>
 
                 {canComment && (
                     <div className="mb-6 space-y-2">
@@ -136,8 +148,9 @@ export default function PostDetail() {
                             placeholder="Yorumunu yaz..."
                             value={comment}
                             onChange={(e) => setComment(e.target.value)}
+                            className="transition-all duration-200 focus:shadow-md"
                         />
-                        <Button onClick={submitComment} disabled={!comment.trim()}>
+                        <Button onClick={submitComment} disabled={!comment.trim()} className="transition-all duration-200">
                             Gönder
                         </Button>
                     </div>
@@ -147,8 +160,8 @@ export default function PostDetail() {
                     <p className="text-muted-foreground">Henüz yorum yok.</p>
                 ) : (
                     <div className="space-y-3">
-                        {post.comments.map((c) => (
-                            <Card key={c.id}>
+                        {post.comments.map((c, i) => (
+                            <Card key={c.id} className={`animate-fade-in stagger-${Math.min(i + 1, 8)} hover:shadow-sm transition-shadow duration-200`}>
                                 <CardContent className="pt-4">
                                     <div className="flex justify-between items-start">
                                         <div>
@@ -156,7 +169,11 @@ export default function PostDetail() {
                                             <div className="flex items-center gap-2 mt-2">
                                                 <span className="text-xs font-medium">{c.author.username}</span>
                                                 <span className="text-xs text-muted-foreground">
-                                                    {new Date(c.created_at).toLocaleDateString("tr-TR")}
+                                                    {new Date(c.created_at).toLocaleDateString("tr-TR", {
+                                                        year: "numeric",
+                                                        month: "long",
+                                                        day: "numeric",
+                                                    })}
                                                 </span>
                                             </div>
                                         </div>
@@ -165,6 +182,7 @@ export default function PostDetail() {
                                                 variant="ghost"
                                                 size="sm"
                                                 onClick={() => deleteComment(c.id)}
+                                                className="text-muted-foreground hover:text-destructive transition-colors duration-200"
                                             >
                                                 Sil
                                             </Button>

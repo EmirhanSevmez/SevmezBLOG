@@ -16,7 +16,6 @@ export default function NewPost() {
     const [content, setContent] = useState("");
     const [error, setError] = useState("");
 
-    // Rol kontrolü - approved+ değilse erişemesin
     if (!user) return <Layout><p>Giriş yapmalısın.</p></Layout>;
     if (user.role !== "approved" && user.role !== "moderator" && user.role !== "admin") {
         return <Layout><p>Post oluşturmak için onaylı kullanıcı olmalısın.</p></Layout>;
@@ -29,7 +28,6 @@ export default function NewPost() {
             const res = await api.post("/posts", { title, content });
             router.push(`/posts/${res.data.id}`);
         } catch (err: any) {
-            console.error("Post error:", err);
             const msg = err?.response?.data?.error || err?.message || "Post oluşturulamadı";
             setError(msg);
         }
@@ -37,23 +35,28 @@ export default function NewPost() {
 
     return (
         <Layout>
-            <div className="max-w-2xl mx-auto">
-                <Card>
+            <div className="max-w-2xl mx-auto mt-4">
+                <Card className="animate-fade-in shadow-lg">
                     <CardHeader>
-                        <CardTitle>Yeni Post</CardTitle>
+                        <CardTitle className="text-2xl">Yeni Post</CardTitle>
+                        <p className="text-sm text-muted-foreground mt-1">Düşüncelerinizi paylaşın</p>
                     </CardHeader>
                     <CardContent>
                         <form onSubmit={handleSubmit} className="space-y-4">
-                            {error && <p className="text-sm text-destructive">{error}</p>}
+                            {error && (
+                                <div className="bg-destructive/10 text-destructive text-sm p-3 rounded-md animate-fade-in-down">
+                                    {error}
+                                </div>
+                            )}
                             <div className="space-y-2">
                                 <Label htmlFor="title">Başlık</Label>
-                                <Input id="title" value={title} onChange={(e) => setTitle(e.target.value)} required />
+                                <Input id="title" placeholder="Yazınızın başlığı" value={title} onChange={(e) => setTitle(e.target.value)} required className="transition-all duration-200 focus:shadow-md" />
                             </div>
                             <div className="space-y-2">
                                 <Label htmlFor="content">İçerik</Label>
-                                <Textarea id="content" rows={10} value={content} onChange={(e) => setContent(e.target.value)} required />
+                                <Textarea id="content" rows={10} placeholder="Yazınızı buraya yazın..." value={content} onChange={(e) => setContent(e.target.value)} required className="transition-all duration-200 focus:shadow-md" />
                             </div>
-                            <Button type="submit" className="w-full">Yayınla</Button>
+                            <Button type="submit" className="w-full transition-all duration-200 hover:shadow-md">Yayınla</Button>
                         </form>
                     </CardContent>
                 </Card>

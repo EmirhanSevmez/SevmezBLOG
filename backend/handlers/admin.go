@@ -12,7 +12,10 @@ import (
 
 func ListUsers(c *gin.Context) {
 	var users []models.User
-	config.DB.Order("created_at DESC").Find(&users)
+	if err := config.DB.Order("created_at DESC").Find(&users).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch users"})
+		return
+	}
 
 	c.JSON(http.StatusOK, users)
 }
@@ -53,7 +56,10 @@ func UpdateUserRole(c *gin.Context) {
 		return
 	}
 
-	config.DB.Model(&target).Update("role", body.Role)
+	if err := config.DB.Model(&target).Update("role", body.Role).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update role"})
+		return
+	}
 
 	c.JSON(http.StatusOK, gin.H{
 		"message": "Role updated",

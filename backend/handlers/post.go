@@ -12,10 +12,13 @@ import (
 
 func ListPosts(c *gin.Context) {
 	var posts []models.Post
-	config.DB.Preload("Author").
+	if err := config.DB.Preload("Author").
 		Where("published = ?", true).
 		Order("created_at DESC").
-		Find(&posts)
+		Find(&posts).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch posts"})
+		return
+	}
 
 	c.JSON(http.StatusOK, posts)
 }
@@ -55,8 +58,14 @@ func CreatePost(c *gin.Context) {
 		Content:   body.Content,
 		Published: true,
 	}
-	config.DB.Create(&post)
-	config.DB.Preload("Author").First(&post, "id = ?", post.ID)
+	if err := config.DB.Create(&post).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create post"})
+		return
+	}
+	if err := config.DB.Preload("Author").First(&post, "id = ?", post.ID).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch post"})
+		return
+	}
 
 	c.JSON(http.StatusCreated, post)
 }
@@ -82,9 +91,14 @@ func DeletePost(c *gin.Context) {
 		return
 	}
 
-	// Önce yorumları sil, sonra postu
-	config.DB.Where("post_id = ?", id).Delete(&models.Comment{})
-	config.DB.Delete(&post)
+	if err := config.DB.Where("post_id = ?", id).Delete(&models.Comment{}).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to delete comments"})
+		return
+	}
+	if err := config.DB.Delete(&post).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to delete post"})
+		return
+	}
 
 	c.JSON(http.StatusOK, gin.H{"message": "Post deleted"})
 }

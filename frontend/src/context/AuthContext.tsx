@@ -27,7 +27,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         if (token) {
             api.get("/auth/me")
                 .then((res) => setUser(res.data))
-                .catch(() => localStorage.removeItem("token"))
+                .catch(() => {
+                    localStorage.removeItem("token");
+                    setUser(null);
+                })
                 .finally(() => setLoading(false));
         } else {
             setLoading(false);
@@ -52,11 +55,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
 
     return (
-        <AuthContext.Provider value= {{ user, loading, login, register, logout }
-}>
-    { children }
-    </AuthContext.Provider>
-  );
+        <AuthContext.Provider value={{ user, loading, login, register, logout }}>
+            {children}
+        </AuthContext.Provider>
+    );
 }
 
 export const useAuth = () => useContext(AuthContext);

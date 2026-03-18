@@ -12,7 +12,7 @@ type Comment = {
     id: string;
     content: string;
     created_at: string;
-    author: { username: string };
+    author: { id: string; username: string };
 };
 
 type Post = {
@@ -104,8 +104,10 @@ export default function PostDetail() {
         user?.role === "moderator" ||
         user?.role === "admin";
 
-    const canDeleteComment =
-        user?.role === "moderator" || user?.role === "admin";
+    const canDeleteComment = (c: Comment) =>
+        user?.id === c.author?.id ||
+        user?.role === "moderator" ||
+        user?.role === "admin";
 
     return (
         <Layout>
@@ -177,7 +179,7 @@ export default function PostDetail() {
                                                 </span>
                                             </div>
                                         </div>
-                                        {canDeleteComment && (
+                                        {canDeleteComment(c) && (
                                             <Button
                                                 variant="ghost"
                                                 size="sm"

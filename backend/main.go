@@ -41,13 +41,18 @@ func seedAdmin() {
 		return
 	}
 
-	hash, _ := middleware.HashPassword("admin123")
+	hash, err := middleware.HashPassword("admin123")
+	if err != nil {
+		log.Fatalf("Failed to hash admin password: %v", err)
+	}
 	admin := models.User{
 		Username:     "admin",
 		Email:        "admin@blog.com",
 		PasswordHash: hash,
 		Role:         models.RoleAdmin,
 	}
-	config.DB.Create(&admin)
+	if err := config.DB.Create(&admin).Error; err != nil {
+		log.Fatalf("Failed to create admin user: %v", err)
+	}
 	log.Println("Admin user created — admin@blog.com / admin123")
 }

@@ -1,4 +1,4 @@
-# SevmezBLOG (v0.2)
+# SevmezBLOG (v0.3)
 
 Full-stack blog platformu. Go (Gin) backend, Next.js (React) frontend, PostgreSQL veritabanı. JWT tabanlı kimlik doğrulama ve 5 kademeli rol sistemi ile güçlendirilmiş, Docker ile tek komutla ayağa kalkar.
 
@@ -31,43 +31,21 @@ cd SevmezBLOG
 
 ### 2. Ortam değişkenlerini ayarla
 
-Proje **`.env` dosyası olmadan çalışmaz**. Aşağıdaki iki `.env` dosyasını oluşturmanız gerekiyor:
+Proje **`.env` dosyası olmadan çalışmaz**. Repoda `.env.example` dosyaları hazır olarak bulunur. Bunları kopyalayıp kendi değerlerinizi girin:
 
-**Root dizin - `.env`** (Docker Compose için):
+**Docker Compose için:**
 
-```env
-#  Database 
-DB_USER=admin
-DB_PASSWORD=secretpassword
-DB_NAME=blogdb
-
-#  JWT 
-JWT_SECRET=super-secret-key-change-me-in-production
-
-#  Server 
-PORT=8080
-
-#  Frontend 
-NEXT_PUBLIC_API_URL=http://localhost:8080
+```bash
+cp .env.example .env
 ```
 
-**Backend dizini - `backend/.env`** (Lokal geliştirme için):
+**Lokal geliştirme için:**
 
-```env
-#  Database 
-DB_HOST=127.0.0.1
-DB_USER=admin
-DB_PASSWORD=secretpassword
-DB_NAME=blogdb
-DB_PORT=5432
-
-#  JWT 
-JWT_SECRET=super-secret-key-change-me-in-production
-
-#  Server 
-GIN_MODE=release
-PORT=8080
+```bash
+cp backend/.env.example backend/.env
 ```
+
+Ardından `.env` dosyalarını açıp `DB_PASSWORD` ve `JWT_SECRET` gibi değerleri kendi değerlerinizle güncelleyin.
 
 > **Not:** `.env` dosyaları `.gitignore`'a eklenmiştir ve repo'ya push edilmez. Production ortamında tüm değerleri (özellikle `JWT_SECRET` ve `DB_PASSWORD`) güçlü, benzersiz değerlerle değiştirin.
 
@@ -183,6 +161,7 @@ SevmezBLOG/
 │   ├── models/          # GORM modelleri (User, Post, Comment)
 │   ├── routes/          # API route tanımları
 │   ├── .env             # Ortam değişkenleri (git'e dahil değil)
+│   ├── .env.example     # Örnek ortam değişkenleri
 │   ├── Dockerfile       # Multi-stage production build
 │   ├── go.mod
 │   └── main.go
@@ -197,6 +176,7 @@ SevmezBLOG/
 │   ├── next.config.mjs
 │   └── package.json
 ├── .env                 # Docker Compose ortam değişkenleri (git'e dahil değil)
+├── .env.example         # Örnek ortam değişkenleri
 ├── docker-compose.yaml
 └── README.md
 ```

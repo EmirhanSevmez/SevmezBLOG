@@ -4,6 +4,7 @@ frontend/out/
 
 *.env
 .env.*
+!*.env.example
 backend/.env
 
 backend/tmp/

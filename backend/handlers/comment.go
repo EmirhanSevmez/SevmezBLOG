@@ -38,8 +38,14 @@ func CreateComment(c *gin.Context) {
 		AuthorID: userID.(uuid.UUID),
 		Content:  body.Content,
 	}
-	config.DB.Create(&comment)
-	config.DB.Preload("Author").First(&comment, "id = ?", comment.ID)
+	if err := config.DB.Create(&comment).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create comment"})
+		return
+	}
+	if err := config.DB.Preload("Author").First(&comment, "id = ?", comment.ID).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch comment"})
+		return
+	}
 
 	c.JSON(http.StatusCreated, comment)
 }
@@ -57,7 +63,17 @@ func DeleteComment(c *gin.Context) {
 		return
 	}
 
-	config.DB.Delete(&comment)
+	userID, _ := c.Get("userID")
+	userRole, _ := c.Get("userRole")
+	if comment.AuthorID != userID.(uuid.UUID) && !userRole.(models.Role).AtLeast(models.RoleMod) {
+		c.JSON(http.StatusForbidden, gin.H{"error": "Not allowed"})
+		return
+	}
+
+	if err := config.DB.Delete(&comment).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to delete comment"})
+		return
+	}
 
 	c.JSON(http.StatusOK, gin.H{"message": "Comment deleted"})
 }

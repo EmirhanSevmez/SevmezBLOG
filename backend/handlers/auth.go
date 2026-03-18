@@ -40,9 +40,16 @@ func Register(c *gin.Context) {
 		PasswordHash: hash,
 		Role:         models.RoleUser,
 	}
-	config.DB.Create(&user)
+	if err := config.DB.Create(&user).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create user"})
+		return
+	}
 
-	token, _ := middleware.GenerateToken(user.ID, user.Username, user.Role)
+	token, err := middleware.GenerateToken(user.ID, user.Username, user.Role)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate token"})
+		return
+	}
 
 	c.JSON(http.StatusCreated, gin.H{
 		"token": token,
@@ -71,7 +78,11 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	token, _ := middleware.GenerateToken(user.ID, user.Username, user.Role)
+	token, err := middleware.GenerateToken(user.ID, user.Username, user.Role)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate token"})
+		return
+	}
 
 	c.JSON(http.StatusOK, gin.H{
 		"token": token,
@@ -83,7 +94,10 @@ func GetMe(c *gin.Context) {
 	userID, _ := c.Get("userID")
 
 	var user models.User
-	config.DB.First(&user, "id = ?", userID.(uuid.UUID))
+	if err := config.DB.First(&user, "id = ?", userID.(uuid.UUID)).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "User not found"})
+		return
+	}
 
 	c.JSON(http.StatusOK, user)
 }

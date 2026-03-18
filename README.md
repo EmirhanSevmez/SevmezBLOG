@@ -36,35 +36,35 @@ Proje **`.env` dosyası olmadan çalışmaz**. Aşağıdaki iki `.env` dosyasın
 **Root dizin - `.env`** (Docker Compose için):
 
 ```env
-# ── Database ──
+#  Database 
 DB_USER=admin
 DB_PASSWORD=secretpassword
 DB_NAME=blogdb
 
-# ── JWT ──
+#  JWT 
 JWT_SECRET=super-secret-key-change-me-in-production
 
-# ── Server ──
+#  Server 
 PORT=8080
 
-# ── Frontend ──
+#  Frontend 
 NEXT_PUBLIC_API_URL=http://localhost:8080
 ```
 
 **Backend dizini - `backend/.env`** (Lokal geliştirme için):
 
 ```env
-# ── Database ──
+#  Database 
 DB_HOST=127.0.0.1
 DB_USER=admin
 DB_PASSWORD=secretpassword
 DB_NAME=blogdb
 DB_PORT=5432
 
-# ── JWT ──
+#  JWT 
 JWT_SECRET=super-secret-key-change-me-in-production
 
-# ── Server ──
+#  Server 
 GIN_MODE=release
 PORT=8080
 ```
